@@ -3,18 +3,21 @@ import "./WordPuzzleComponent.css";
 export const WordPuzzleComponent = () => {
   const matrix = [
     ["a", "b", "c", "d", "e", "d", "e", "d", "e"],
-    ["f", "g", "h", "i", "j", "t", "e", "d", "e"],
-    ["k", "l", "m", "n", "o", "r", "e", "d", "e"],
-    ["p", "g", "u", "r", "k", "a", "n", "d", "e"],
-    ["y", "u", "v", "w", "x", "k", "e", "d", "e"],
-    ["k", "l", "m", "n", "o", "y", "e", "d", "e"],
-    ["p", "q", "r", "s", "t", "a", "e", "d", "e"],
-    ["y", "u", "v", "w", "x", "d", "e", "d", "e"],
+    ["a", "s", "h", "i", "j", "t", "e", "d", "c"],
+    ["a", "g", "m", "n", "o", "r", "e", "d", "i"],
+    ["s", "g", "u", "r", "k", "a", "n", "d", "m"],
+    ["k", "i", "v", "w", "x", "k", "e", "d", "b"],
+    ["i", "k", "m", "n", "o", "y", "e", "d", "o"],
+    ["k", "q", "r", "s", "t", "a", "e", "d", "m"],
+    ["y", "u", "e", "m", "e", "n", "e", "d", "e"],
   ];
+
+  const answerWords = ["gurkan","trakya","deneme","ask","cimbom"];
 
   const [isSelecting, setIsSelecting] = useState(false);
   const [data, setData] = useState([]);
   const [selectedLetters, setSelectedLetters] = useState([]);
+  const [markedLetters, setMarkedLetters] = useState([]);
   const [path, setPath] = useState();
 
   useEffect(() => {
@@ -35,10 +38,15 @@ export const WordPuzzleComponent = () => {
     } else {
       const selectedWord = selectedLetters.map((x) => x.letter).join("");
       console.log(selectedWord);
+      console.log("is answer : ", isAnswer(selectedLetters));
       setPath();
       setSelectedLetters([]);
     }
   }, [isSelecting]);
+
+  useEffect(() => {
+    console.log("marked letters:", markedLetters);
+  }, [markedLetters]);
 
   const addLetterToSelectedWords = (letter) => {
     if (isSelecting) {
@@ -53,6 +61,33 @@ export const WordPuzzleComponent = () => {
         }
       }
     }
+  };
+
+  const isAnswer = (param) => {
+    const selectedWord = param.map((x) => x.letter).join("");
+    let found = false;
+    for (let i = 0; i < answerWords.length; i++) {
+      const element = answerWords[i];
+      if (selectedWord === element) {
+        found = true;
+        markLetters(param);
+        break;
+      }
+    }
+    return found;
+  };
+
+  const markLetters = (param) => {
+    setMarkedLetters(unique([...markedLetters, ...param], ["row", "column"]));
+  };
+
+  const unique = (arr, keyProps) => {
+    const kvArray = arr.map((entry) => {
+      const key = keyProps.map((k) => entry[k]).join("|");
+      return [key, entry];
+    });
+    const map = new Map(kvArray);
+    return Array.from(map.values());
   };
 
   const removeLetterFromList = (letter) => {
@@ -168,6 +203,25 @@ export const WordPuzzleComponent = () => {
     return found;
   };
 
+  const isMarked = (searched) => {
+    let found = false;
+
+    if (markedLetters.length > 0) {
+      for (let i = 0; i < markedLetters.length; i++) {
+        const element = markedLetters[i];
+        if (
+          searched.row === element.row &&
+          searched.column === element.column
+        ) {
+          found = true;
+          break;
+        }
+      }
+    }
+
+    return found;
+  };
+
   return (
     <div className="root">
       <table onMouseLeave={() => setIsSelecting(false)}>
@@ -187,7 +241,11 @@ export const WordPuzzleComponent = () => {
                       className="letter-wrapper"
                       style={{
                         backgroundColor:
-                          isSelected(j) === true ? "white" : "rgb(1, 146, 98)",
+                          isMarked(j) === true
+                            ? "red"
+                            : isSelected(j) === true
+                            ? "white"
+                            : "rgb(1, 146, 98)",
                       }}
                     >
                       <h3
