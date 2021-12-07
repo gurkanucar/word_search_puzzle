@@ -1,3 +1,10 @@
+# example image
+![Alt img](./example.png)
+
+![Alt img](./example2.png)
+
+![Alt img](./example3.png)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
