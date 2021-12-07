@@ -12,13 +12,14 @@ export const WordPuzzleComponent = () => {
     ["y", "u", "e", "m", "e", "n", "e", "d", "e"],
   ];
 
-  const answerWords = ["gurkan","trakya","deneme","ask","cimbom"];
+  const answerWords = ["gurkan", "trakya", "deneme", "ask", "cimbom"];
 
   const [isSelecting, setIsSelecting] = useState(false);
   const [data, setData] = useState([]);
   const [selectedLetters, setSelectedLetters] = useState([]);
   const [markedLetters, setMarkedLetters] = useState([]);
   const [path, setPath] = useState();
+  const [hover, setHover] = useState();
 
   useEffect(() => {
     const tmp = matrix.map((row, i) => {
@@ -232,7 +233,11 @@ export const WordPuzzleComponent = () => {
                 {i.map((j, column) => {
                   return (
                     <td
-                      onMouseEnter={() => addLetterToSelectedWords(j)}
+                      onMouseLeave={() => setHover()}
+                      onMouseEnter={() => {
+                        addLetterToSelectedWords(j);
+                        setHover(j);
+                      }}
                       onMouseDown={() => {
                         addFirstLetter(j);
                         setIsSelecting(true);
@@ -245,6 +250,8 @@ export const WordPuzzleComponent = () => {
                             ? "red"
                             : isSelected(j) === true
                             ? "white"
+                            : j === hover
+                            ? "rgb(0, 218, 145)"
                             : "rgb(1, 146, 98)",
                       }}
                     >

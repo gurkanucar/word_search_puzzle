@@ -13,16 +13,16 @@
     user-select: none;
 }
 
-p {
+/* p {
     -webkit-user-select: text;
     -khtml-user-select: text;
     -moz-user-select: text;
     -o-user-select: text;
     user-select: text;
-}
+} */
 
 .letter-wrapper {
-    background: rgb(1, 146, 98);
+    /* background: rgb(1, 146, 98); */
     padding: 5px;
     display: inline-block;
     padding-top: 5px;
@@ -33,7 +33,7 @@ p {
 
 
 .letter-wrapper:hover {
-    background: rgb(0, 218, 145) !important;
+    /* background: rgb(0, 218, 145) !important; */
     padding-top: 5px;
     padding-left: 15px;
     padding-right: 15px;
