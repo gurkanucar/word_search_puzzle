@@ -3,12 +3,12 @@ import "./WordPuzzleComponent.css";
 export const WordPuzzleComponent = () => {
   const matrix = [
     ["a", "b", "c", "d", "e", "d", "e", "d", "e"],
-    ["f", "g", "h", "i", "j", "d", "e", "d", "e"],
-    ["k", "l", "m", "n", "o", "d", "e", "d", "e"],
-    ["p", "q", "r", "s", "t", "d", "e", "d", "e"],
-    ["y", "u", "v", "w", "x", "d", "e", "d", "e"],
-    ["k", "l", "m", "n", "o", "d", "e", "d", "e"],
-    ["p", "q", "r", "s", "t", "d", "e", "d", "e"],
+    ["f", "g", "h", "i", "j", "t", "e", "d", "e"],
+    ["k", "l", "m", "n", "o", "r", "e", "d", "e"],
+    ["p", "g", "u", "r", "k", "a", "n", "d", "e"],
+    ["y", "u", "v", "w", "x", "k", "e", "d", "e"],
+    ["k", "l", "m", "n", "o", "y", "e", "d", "e"],
+    ["p", "q", "r", "s", "t", "a", "e", "d", "e"],
     ["y", "u", "v", "w", "x", "d", "e", "d", "e"],
   ];
 
@@ -35,32 +35,50 @@ export const WordPuzzleComponent = () => {
 
   useEffect(() => {
     if (isSelecting) {
-      // console.log("selecting now");
     } else {
-      //console.log("released");
       console.log(selectedLetters.map((x) => x.letter).toString());
       setPath();
       setSelectedLetters([]);
     }
   }, [isSelecting]);
 
+  useEffect(() => {
+    console.log(selectedLetters.map((x) => x.letter).toString());
+  }, [selectedLetters]);
+
   const addLetterToSelectedWords = (letter) => {
     if (isSelecting) {
-      // console.log("selectedLetters!!!", selectedLetters);
-
-      const result = isAlreadySelected(letter.letter);
-      // console.log("result!!!", result);
-
-      if (result === false && isConnected(letter)) {
-        setSelectedLetters([...selectedLetters, letter]);
+      const result = isSelected(letter);
+      console.log(
+        "add letter to selected words",
+        letter.letter,
+        "is exists",
+        result
+      );
+      if (result === false) {
+        if (isConnected(letter)) {
+          setSelectedLetters([...selectedLetters, letter]);
+        }
       } else {
-        setSelectedLetters(
-          [...selectedLetters].filter(
-            (item) => item.row === letter.row && item.column === letter.column
-          )
-        );
+        const before = selectedLetters.slice(-1)[0];
+        if (
+          (letter.column + 1 === before.column && letter.row === before.row) ||
+          (letter.column - 1 === before.column && letter.row === before.row) ||
+          (letter.row + 1 === before.row && letter.column === before.column) ||
+          (letter.row - 1 === before.row && letter.column === before.column)
+        ) {
+          console.log("before", before, "last", letter);
+          removeLetterFromList(before);
+        }
       }
     }
+  };
+
+  const removeLetterFromList = (letter) => {
+    const tmp = selectedLetters.filter((element) => {
+      return letter.row !== element.row || letter.column !== element.column;
+    });
+    setSelectedLetters(tmp);
   };
 
   const isConnected = (letter) => {
@@ -75,7 +93,6 @@ export const WordPuzzleComponent = () => {
     } else {
       const lastLetter = selectedLetters.slice(-1)[0];
       console.log(lastLetter, letter);
-
       //   lastLetter.row - 1 === letter.row ||
       //   lastLetter.row + 1 === letter.row ||
       // lastLetter.column - 1 === letter.column ||
@@ -105,6 +122,8 @@ export const WordPuzzleComponent = () => {
         lastLetter.row > letter.row
       ) {
         result = true;
+      } else {
+        setSelectedLetters([]);
       }
     }
     return result;
@@ -137,23 +156,23 @@ export const WordPuzzleComponent = () => {
   };
 
   const addFirstLetter = (letter) => {
-    // console.log("add first letter");
     setSelectedLetters([letter]);
   };
 
-  const isAlreadySelected = (searched) => {
+  const isSelected = (searched) => {
     let found = false;
 
     if (selectedLetters.length > 0) {
-      selectedLetters?.map((element) => {
+      for (let i = 0; i < selectedLetters.length; i++) {
+        const element = selectedLetters[i];
         if (
           searched.row === element.row &&
           searched.column === element.column
         ) {
           found = true;
+          break;
         }
-      });
-      //   console.log("Is alreadey selected for ", searched.letter, found);
+      }
     }
 
     return found;
@@ -178,15 +197,14 @@ export const WordPuzzleComponent = () => {
                       className="letter-wrapper"
                       style={{
                         backgroundColor:
-                          isAlreadySelected(j) === true ? "white" : "rgb(1, 146, 98)",
+                          isSelected(j) === true ? "white" : "rgb(1, 146, 98)",
                       }}
                     >
                       <h3
                         style={{
                           fontFamily: "monospace",
                           fontSize: "2.5rem",
-                          color:
-                            isAlreadySelected(j) !== true ? "white" : "black",
+                          color: isSelected(j) !== true ? "white" : "black",
                         }}
                       >
                         {j.letter}

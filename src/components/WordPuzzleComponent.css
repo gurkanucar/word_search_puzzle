@@ -3,7 +3,6 @@
     justify-content: center;
     margin-top: 10%;
 
-
 }
 
 * {
@@ -23,10 +22,9 @@ p {
 }
 
 .letter-wrapper {
-    /* font-family: monospace;
-     font-size: 2.5rem;
-    color: green; */
     background: rgb(1, 146, 98);
+    padding: 5px;
+    display: inline-block;
     padding-top: 5px;
     padding-left: 15px;
     padding-right: 15px;
@@ -35,9 +33,6 @@ p {
 
 
 .letter-wrapper:hover {
-    /* font-family: monospace;
-     font-size: 2.5rem;
-    color: green; */
     background: rgb(0, 218, 145) !important;
     padding-top: 5px;
     padding-left: 15px;
@@ -46,19 +41,10 @@ p {
 }
 
 
-
 table,
 tr,
 td {
     border: 1px inset white;
     border-collapse: collapse;
-    border-spacing: 0;
-}
-
-
-
-.table-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   
 }
