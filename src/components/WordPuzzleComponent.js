@@ -13,11 +13,8 @@ export const WordPuzzleComponent = () => {
   ];
 
   const [isSelecting, setIsSelecting] = useState(false);
-
   const [data, setData] = useState([]);
-
   const [selectedLetters, setSelectedLetters] = useState([]);
-
   const [path, setPath] = useState();
 
   useEffect(() => {
@@ -36,38 +33,22 @@ export const WordPuzzleComponent = () => {
   useEffect(() => {
     if (isSelecting) {
     } else {
-      console.log(selectedLetters.map((x) => x.letter).toString());
+      const selectedWord = selectedLetters.map((x) => x.letter).join("");
+      console.log(selectedWord);
       setPath();
       setSelectedLetters([]);
     }
   }, [isSelecting]);
 
-  useEffect(() => {
-    console.log(selectedLetters.map((x) => x.letter).toString());
-  }, [selectedLetters]);
-
   const addLetterToSelectedWords = (letter) => {
     if (isSelecting) {
       const result = isSelected(letter);
-      console.log(
-        "add letter to selected words",
-        letter.letter,
-        "is exists",
-        result
-      );
-      if (result === false) {
-        if (isConnected(letter)) {
-          setSelectedLetters([...selectedLetters, letter]);
-        }
+      const before = selectedLetters.slice(-1)[0];
+      if (result === false && isConnected(letter, before)) {
+        setSelectedLetters([...selectedLetters, letter]);
       } else {
         const before = selectedLetters.slice(-1)[0];
-        if (
-          (letter.column + 1 === before.column && letter.row === before.row) ||
-          (letter.column - 1 === before.column && letter.row === before.row) ||
-          (letter.row + 1 === before.row && letter.column === before.column) ||
-          (letter.row - 1 === before.row && letter.column === before.column)
-        ) {
-          console.log("before", before, "last", letter);
+        if (isBeforeSelect(letter, before)) {
           removeLetterFromList(before);
         }
       }
@@ -81,73 +62,82 @@ export const WordPuzzleComponent = () => {
     setSelectedLetters(tmp);
   };
 
-  const isConnected = (letter) => {
+  const isBeforeSelect = (letter, before) => {
     let result = false;
+    if (
+      (letter.column + 1 === before.column && letter.row === before.row) ||
+      (letter.column - 1 === before.column && letter.row === before.row) ||
+      (letter.row + 1 === before.row && letter.column === before.column) ||
+      (letter.row - 1 === before.row && letter.column === before.column)
+    ) {
+      result = true;
+    }
 
+    return result;
+  };
+
+  const isConnected = (letter, before) => {
+    let result = false;
     if (selectedLetters.length < 1) {
       result = true;
-    } else if (selectedLetters.length === 1) {
-      console.log(chosenPath(letter));
-      setPath(chosenPath(letter));
+    } else if (selectedLetters.length === 1 && isBeforeSelect(letter, before)) {
+      setPath(chosePath(letter));
       result = true;
     } else {
-      const lastLetter = selectedLetters.slice(-1)[0];
-      console.log(lastLetter, letter);
-      //   lastLetter.row - 1 === letter.row ||
-      //   lastLetter.row + 1 === letter.row ||
-      // lastLetter.column - 1 === letter.column ||
-      //       lastLetter.column + 1 === letter.column ||
-
       if (
         path === "right2left" &&
-        lastLetter.row === letter.row &&
-        lastLetter.column > letter.column
+        before.row === letter.row &&
+        before.column - 1 === letter.column
       ) {
         result = true;
       } else if (
         path === "left2right" &&
-        lastLetter.row === letter.row &&
-        lastLetter.column < letter.column
+        before.row === letter.row &&
+        before.column + 1 === letter.column
       ) {
         result = true;
       } else if (
         path === "top2bottom" &&
-        lastLetter.column === letter.column &&
-        lastLetter.row < letter.row
+        before.column === letter.column &&
+        before.row + 1 === letter.row
       ) {
         result = true;
       } else if (
         path === "bottom2top" &&
-        lastLetter.column === letter.column &&
-        lastLetter.row > letter.row
+        before.column === letter.column &&
+        before.row - 1 === letter.row
       ) {
         result = true;
       } else {
+        result = false;
         setSelectedLetters([]);
       }
     }
     return result;
   };
 
-  const chosenPath = (item) => {
+  const chosePath = (item) => {
     let result = "right2left";
     const lastLetter = selectedLetters.slice(-2)[0];
     const letter = item !== undefined ? item : selectedLetters.slice(-1)[0];
-    if (lastLetter.row === letter.row && lastLetter.column > letter.column) {
+    if (
+      lastLetter.row === letter.row &&
+      lastLetter.column - 1 === letter.column
+    ) {
       result = "right2left";
     } else if (
       lastLetter.row === letter.row &&
-      lastLetter.column < letter.column
+      lastLetter.column + 1 === letter.column
     ) {
       result = "left2right";
     } else if (
       lastLetter.column === letter.column &&
-      lastLetter.row < letter.row
+      lastLetter.row + 1 === letter.row
     ) {
       result = "top2bottom";
     } else if (
       lastLetter.column === letter.column &&
-      lastLetter.row > letter.row
+      lastLetter.row - 1 === letter.row
     ) {
       result = "bottom2top";
     }
