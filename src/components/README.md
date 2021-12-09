@@ -7,12 +7,11 @@ A simple word search puzzle component
 
 ## Example Images
 
-![example](./img.png)
+![example](https://github.com/gurkanucar/word_search_puzzle/raw/master/img.png)
 
-![example](./img2.png)
+![example](https://github.com/gurkanucar/word_search_puzzle/raw/master/img2.png)
 
-![example](./img3.png)
-
+![example](https://github.com/gurkanucar/word_search_puzzle/raw/master/img3.png)
 
 ## Properties
 
@@ -59,7 +58,7 @@ A simple word search puzzle component
 #### variables
 
 ```javascript
-   const answerWords = ["gurkan", "example"];
+  const answerWords = ["gurkan", "example"];
   const matrix = [
     ["a", "b", "c", "d", "e", "g", "x", "t", "e"],
     ["a", "s", "h", "i", "j", "e", "e", "e", "c"],
@@ -70,7 +69,6 @@ A simple word search puzzle component
     ["k", "q", "r", "s", "t", "l", "b", "a", "m"],
     ["y", "t", "e", "s", "t", "e", "e", "t", "e"],
   ];
-
   const [isSelecting, setIsSelecting] = useState(false);
 
   const [selectedLetters, setSelectedLetters] = useState([]);
@@ -130,4 +128,3 @@ A simple word search puzzle component
         }}
       />
 ```
-
