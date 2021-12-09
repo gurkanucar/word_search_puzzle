@@ -1,7 +1,33 @@
 import React, { useEffect, useState } from "react";
 import "./WordPuzzleComponent.css";
-export const WordPuzzleComponent = () => {
-  const matrix = [
+export const WordPuzzleComponent = (props) => {
+  const {
+    markedBackgroundColor,
+    selectedBackgroundColor,
+    hoveredBackgroundColor,
+    backgroundColor,
+    fontFamily,
+    fontWeight,
+    fontSize,
+    markedForeColor,
+    selectedForeColor,
+    hoveredForeColor,
+    foreColor,
+  } = props.design;
+
+  const {
+    answerWords,
+    matrix,
+    isSelecting,
+    setIsSelecting,
+    availablePaths,
+    selectedLetters,
+    setSelectedLetters,
+    markedLetters,
+    setMarkedLetters,
+  } = props.options;
+
+  /*const matrix = [
     ["a", "b", "c", "d", "e", "d", "e", "d", "e"],
     ["a", "s", "h", "i", "j", "t", "e", "d", "c"],
     ["a", "g", "m", "n", "o", "r", "e", "d", "i"],
@@ -10,14 +36,13 @@ export const WordPuzzleComponent = () => {
     ["i", "k", "m", "n", "o", "y", "e", "d", "o"],
     ["k", "q", "r", "s", "t", "a", "e", "d", "m"],
     ["y", "u", "e", "m", "e", "n", "e", "d", "e"],
-  ];
+  ];*/
 
-  const answerWords = ["gurkan", "trakya", "deneme", "ask", "cimbom"];
-
-  const [isSelecting, setIsSelecting] = useState(false);
+  //const answerWords = ["gurkan", "trakya", "deneme", "ask", "cimbom"];
   const [data, setData] = useState([]);
-  const [selectedLetters, setSelectedLetters] = useState([]);
-  const [markedLetters, setMarkedLetters] = useState([]);
+  // const [isSelecting, setIsSelecting] = useState(false);
+  // const [selectedLetters, setSelectedLetters] = useState([]);
+  // const [markedLetters, setMarkedLetters] = useState([]);
   const [path, setPath] = useState();
   const [hover, setHover] = useState();
 
@@ -38,16 +63,17 @@ export const WordPuzzleComponent = () => {
     if (isSelecting) {
     } else {
       const selectedWord = selectedLetters.map((x) => x.letter).join("");
-      console.log(selectedWord);
-      console.log("is answer : ", isAnswer(selectedLetters));
+      const result = isAnswer(selectedLetters);
+      //console.log(selectedWord);
+      //console.log("is answer : ", result);
       setPath();
       setSelectedLetters([]);
     }
   }, [isSelecting]);
 
-  useEffect(() => {
-    console.log("marked letters:", markedLetters);
-  }, [markedLetters]);
+  // useEffect(() => {
+  //   console.log("marked letters:", markedLetters);
+  // }, [markedLetters]);
 
   const addLetterToSelectedWords = (letter) => {
     if (isSelecting) {
@@ -122,24 +148,28 @@ export const WordPuzzleComponent = () => {
     } else {
       if (
         path === "right2left" &&
+        isAvailablePath(path) &&
         before.row === letter.row &&
         before.column - 1 === letter.column
       ) {
         result = true;
       } else if (
         path === "left2right" &&
+        isAvailablePath(path) &&
         before.row === letter.row &&
         before.column + 1 === letter.column
       ) {
         result = true;
       } else if (
         path === "top2bottom" &&
+        isAvailablePath(path) &&
         before.column === letter.column &&
         before.row + 1 === letter.row
       ) {
         result = true;
       } else if (
         path === "bottom2top" &&
+        isAvailablePath(path) &&
         before.column === letter.column &&
         before.row - 1 === letter.row
       ) {
@@ -153,7 +183,7 @@ export const WordPuzzleComponent = () => {
   };
 
   const chosePath = (item) => {
-    let result = "right2left";
+    let result = "left2right";
     const lastLetter = selectedLetters.slice(-2)[0];
     const letter = item !== undefined ? item : selectedLetters.slice(-1)[0];
     if (
@@ -195,6 +225,22 @@ export const WordPuzzleComponent = () => {
           searched.row === element.row &&
           searched.column === element.column
         ) {
+          found = true;
+          break;
+        }
+      }
+    }
+
+    return found;
+  };
+
+  const isAvailablePath = (searched) => {
+    let found = false;
+
+    if (availablePaths.length > 0) {
+      for (let i = 0; i < availablePaths.length; i++) {
+        const element = availablePaths[i];
+        if (searched === element) {
           found = true;
           break;
         }
@@ -247,19 +293,26 @@ export const WordPuzzleComponent = () => {
                       style={{
                         backgroundColor:
                           isMarked(j) === true
-                            ? "red"
+                            ? markedBackgroundColor
                             : isSelected(j) === true
-                            ? "white"
+                            ? selectedBackgroundColor
                             : j === hover
-                            ? "rgb(0, 218, 145)"
-                            : "rgb(1, 146, 98)",
+                            ? hoveredBackgroundColor
+                            : backgroundColor,
                       }}
                     >
                       <h3
                         style={{
-                          fontFamily: "monospace",
-                          fontSize: "2.5rem",
-                          color: isSelected(j) !== true ? "white" : "black",
+                          fontFamily: "monospace", //fontFamily,
+                          fontSize: fontSize,
+                          color:
+                            isMarked(j) === true
+                              ? markedForeColor
+                              : isSelected(j) === true
+                              ? selectedForeColor
+                              : j === hover
+                              ? hoveredForeColor
+                              : foreColor,
                         }}
                       >
                         {j.letter}

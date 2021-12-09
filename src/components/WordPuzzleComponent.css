@@ -44,7 +44,7 @@
 table,
 tr,
 td {
-    border: 1px inset white;
+    border: 1px inset rgb(255, 255, 255);
     border-collapse: collapse;
    
 }
