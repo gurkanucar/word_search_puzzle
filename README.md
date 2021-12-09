@@ -7,11 +7,11 @@ A simple word search puzzle component
 
 ## Example Images
 
-![Alt img](./example.png)
+![example](./img.png)
 
-![Alt img](./example2.png)
+![example](./img2.png)
 
-![Alt img](./example3.png)
+![example](./img3.png)
 
 
 ## Properties
