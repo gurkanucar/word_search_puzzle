@@ -10,6 +10,8 @@ A simple word search puzzle component
 
 ## Example Images
 
+![example](https://github.com/gurkanucar/word_search_puzzle/raw/master/img0.png)
+
 ![example](https://github.com/gurkanucar/word_search_puzzle/raw/master/img.png)
 
 ![example](https://github.com/gurkanucar/word_search_puzzle/raw/master/img2.png)
