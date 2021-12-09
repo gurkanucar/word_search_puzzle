@@ -3,16 +3,16 @@ import { WordPuzzleComponent } from "../../components/WordPuzzleComponent";
 import "./Home.css";
 
 export const Home = () => {
-  const answerWords = ["gurkan", "trakya", "deneme", "ask", "cimbom"];
+  const answerWords = ["gurkan", "example"];
   const matrix = [
-    ["a", "b", "c", "d", "e", "d", "e", "d", "e"],
-    ["a", "s", "h", "i", "j", "t", "e", "d", "c"],
-    ["a", "g", "m", "n", "o", "r", "e", "d", "i"],
-    ["s", "g", "u", "r", "k", "a", "n", "d", "m"],
-    ["k", "i", "v", "w", "x", "k", "e", "d", "b"],
-    ["i", "k", "m", "n", "o", "y", "e", "d", "o"],
-    ["k", "q", "r", "s", "t", "a", "e", "d", "m"],
-    ["y", "u", "e", "m", "e", "n", "e", "d", "e"],
+    ["a", "b", "c", "d", "e", "g", "x", "t", "e"],
+    ["a", "s", "h", "i", "j", "e", "e", "e", "c"],
+    ["a", "g", "m", "n", "o", "x", "q", "s", "i"],
+    ["s", "g", "u", "r", "k", "a", "n", "t", "m"],
+    ["k", "i", "v", "w", "x", "m", "e", "y", "b"],
+    ["i", "k", "m", "n", "o", "p", "v", "d", "o"],
+    ["k", "q", "r", "s", "t", "l", "b", "a", "m"],
+    ["y", "t", "e", "s", "t", "e", "e", "t", "e"],
   ];
 
   const [isSelecting, setIsSelecting] = useState(false);

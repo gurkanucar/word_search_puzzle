@@ -1,0 +1,25 @@
+{
+  "name": "word-search-puzzle",
+  "version": "1.0.0",
+  "description": "word search puzzle component",
+  "main": "WordPuzzleComponent.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurkanucar/word_search_puzzle.git"
+  },
+  "keywords": [
+    "word",
+    "puzzle",
+    "crossword",
+    "search"
+  ],
+  "author": "grkn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gurkanucar/word_search_puzzle/issues"
+  },
+  "homepage": "https://github.com/gurkanucar/word_search_puzzle#readme"
+}
