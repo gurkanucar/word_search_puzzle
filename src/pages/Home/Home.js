@@ -3,15 +3,15 @@ import { WordPuzzleComponent } from "../../components/WordPuzzleComponent";
 import "./Home.css";
 
 export const Home = () => {
-  const answerWords = ["gurkan", "example"];
+  const answerWords = ["gurkan", "example", "project", "github", "npm"];
   const matrix = [
-    ["a", "b", "c", "d", "e", "g", "x", "t", "e"],
-    ["a", "s", "h", "i", "j", "e", "e", "e", "c"],
-    ["a", "g", "m", "n", "o", "x", "q", "s", "i"],
-    ["s", "g", "u", "r", "k", "a", "n", "t", "m"],
-    ["k", "i", "v", "w", "x", "m", "e", "y", "b"],
-    ["i", "k", "m", "n", "o", "p", "v", "d", "o"],
-    ["k", "q", "r", "s", "t", "l", "b", "a", "m"],
+    ["p", "g", "i", "t", "h", "u", "b", "t", "e"],
+    ["r", "s", "n", "p", "m", "e", "e", "e", "c"],
+    ["o", "g", "m", "n", "o", "x", "q", "s", "i"],
+    ["j", "g", "u", "r", "k", "a", "n", "t", "m"],
+    ["e", "i", "v", "w", "x", "m", "e", "y", "b"],
+    ["c", "k", "m", "n", "o", "p", "v", "d", "o"],
+    ["t", "q", "r", "s", "t", "l", "b", "a", "m"],
     ["y", "t", "e", "s", "t", "e", "e", "t", "e"],
   ];
 
@@ -36,6 +36,9 @@ export const Home = () => {
 
   return (
     <div>
+      {answerWords.map((element) => {
+        return <span>{element}</span>;
+      })}
       <WordPuzzleComponent
         design={{
           markedBackgroundColor: "#00C3FF",
