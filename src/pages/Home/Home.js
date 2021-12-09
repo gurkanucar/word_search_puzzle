@@ -4,6 +4,9 @@ import "./Home.css";
 
 export const Home = () => {
   const answerWords = ["gurkan", "example", "project", "github", "npm"];
+
+  const [found, setFound] = useState([]);
+
   const matrix = [
     ["p", "g", "i", "t", "h", "u", "b", "t", "e"],
     ["r", "s", "n", "p", "m", "e", "e", "e", "c"],
@@ -27,8 +30,32 @@ export const Home = () => {
       console.log("released");
       const selectedWord = selectedLetters.map((x) => x.letter).join("");
       console.log(selectedWord);
+      addToFound(selectedWord);
     }
   }, [isSelecting]);
+
+  const isInList = (searched, arr) => {
+    let found = false;
+
+    for (let i = 0; i < arr.length; i++) {
+      const element = arr[i];
+      if (searched === element) {
+        found = true;
+        break;
+      }
+    }
+
+    return found;
+  };
+
+  const addToFound = (founded) => {
+    if (isInList(founded, answerWords)) {
+      if (!isInList(founded, found)) {
+        setFound([...found, founded]);
+        console.log(founded);
+      }
+    }
+  };
 
   useEffect(() => {
     console.log("marked letters:", markedLetters);
@@ -36,9 +63,30 @@ export const Home = () => {
 
   return (
     <div>
-      {answerWords.map((element) => {
-        return <span>{element}</span>;
-      })}
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {answerWords.map((element) => {
+          return (
+            <span
+              style={{
+                marginTop: 50,
+                marginLeft: 20,
+                marginRight: 20,
+                color: "black",
+              }}
+            >
+              <h2
+                style={{
+                  textDecoration: isInList(element, found)
+                    ? "line-through"
+                    : "none",
+                }}
+              >
+                {element}
+              </h2>
+            </span>
+          );
+        })}
+      </div>
       <WordPuzzleComponent
         design={{
           markedBackgroundColor: "#00C3FF",
