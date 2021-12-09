@@ -3,6 +3,9 @@
 
 A simple word search puzzle component
 
+[Live-DEMO](https://word-search-puzzle-lndqyx05x-gurkanucar.vercel.app)
+
+
 [github-page](https://github.com/gurkanucar/word_search_puzzle)
 
 ## Example Images
@@ -54,6 +57,12 @@ A simple word search puzzle component
         }}
 ```
 ## Usage/Examples
+
+#### import
+
+```javascript
+import WordPuzzleComponent from "word-search-puzzle/WordPuzzleComponent";
+```
 
 #### variables
 
