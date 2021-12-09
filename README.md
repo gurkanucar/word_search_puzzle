@@ -8,7 +8,7 @@ A simple word search puzzle component
 
 ## Example Images
 
-![example](./img0.png)
+![example](./img00.png)
 
 ![example](./img.png)
 

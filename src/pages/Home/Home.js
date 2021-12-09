@@ -11,17 +11,19 @@ export const Home = () => {
     "npm",
     "b2t",
     "r2l",
+    "star",
+    "react",
   ];
 
   const matrix = [
     ["p", "g", "i", "t", "h", "u", "b", "t", "e"],
     ["r", "s", "n", "p", "m", "e", "r", "e", "c"],
-    ["o", "g", "m", "n", "o", "x", "q", "s", "i"],
-    ["j", "g", "u", "r", "k", "a", "n", "t", "m"],
-    ["e", "i", "v", "w", "x", "m", "e", "y", "b"],
-    ["c", "t", "m", "n", "o", "p", "v", "d", "o"],
-    ["t", "2", "r", "s", "t", "l", "b", "a", "m"],
-    ["y", "b", "e", "l", "2", "r", "e", "t", "e"],
+    ["o", "g", "m", "n", "o", "x", "q", "r", "i"],
+    ["j", "g", "u", "r", "k", "a", "n", "e", "m"],
+    ["e", "i", "v", "w", "x", "m", "e", "a", "s"],
+    ["c", "t", "m", "n", "o", "p", "v", "c", "t"],
+    ["t", "2", "r", "s", "t", "l", "b", "t", "a"],
+    ["y", "b", "e", "k", "c", "e", "l", "2", "r"],
   ];
   const [found, setFound] = useState([]);
   const [isSelecting, setIsSelecting] = useState(false);
